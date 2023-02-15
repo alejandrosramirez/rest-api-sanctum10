@@ -1,0 +1,35 @@
+{
+	"The :attribute must contain at least one letter.": "The :attribute must contain at least one letter.",
+	"The :attribute must contain at least one number.": "The :attribute must contain at least one number.",
+	"The :attribute must contain at least one symbol.": "The :attribute must contain at least one symbol.",
+	"The :attribute must contain at least one uppercase and one lowercase letter.": "The :attribute must contain at least one uppercase and one lowercase letter.",
+	"The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute.",
+
+	"Unauthenticated.": "Unauthenticated.",
+	"You don't have the right permissions to access the resource.": "You don't have the right permissions to access the resource.",
+	":model not found.": ":model not found.",
+	"Url doesn't exist.": "Url doesn't exist.",
+	"Specified method on request not valid.": "Specified method on request not valid.",
+	"Specified accept header on request not valid.": "Specified accept header on request not valid.",
+	"A error ocurred, cannot process query.": "A error ocurred, cannot process query.",
+	"Request body is too large.": "Request body is too large.",
+	"Specified media type on request not valid.": "Specified media type on request not valid.",
+    "Too many attempts. Please try again later.": "Too many attempts. Please try again later.",
+	"A server error has ocurred.": "A server error has ocurred.",
+
+	"Incorrect email/password.": "Incorrect email/password.",
+    "Cannot delete record.": "Cannot delete record.",
+	"Cannot delete record because it has already associated.": "Cannot delete record because it has already associated.",
+	"Your account is not verified.": "Your account is not verified.",
+	"Your account has already been verified.": "Your account has already been verified.",
+	"SMS could not be sent.": "SMS could not be sent.",
+	"File :filename not found.": "File :filename not found.",
+
+	"Address": "Address",
+	"Admin": "Admin",
+	"Permission": "Permission",
+	"Profile": "Profile",
+	"Role": "Role",
+	"State": "State",
+	"User": "User"
+}
