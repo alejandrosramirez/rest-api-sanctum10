@@ -20,15 +20,15 @@ class Imager
     public static function resize(string $path, DiskDriver $disk = DiskDriver::LOCAL, int $width = 0): Img
     {
         $url = explode('/', $path);
-        $path = $url[count($url) - 1];
+        $filename = $url[count($url) - 1];
 
         $storageDisk = Storage::disk($disk->value);
 
-        if (!$storageDisk->exists($path)) {
-            throw new GenericException(__('File :filename not found.', ['filename' => $path]));
+        if (!$storageDisk->exists($filename)) {
+            throw new GenericException(__('File :filename not found.', ['filename' => $filename]));
         }
 
-        $imageIns = Image::make($storageDisk->get($path));
+        $imageIns = Image::make($storageDisk->get($filename));
 
         $aspectRatio = $imageIns->height() / $imageIns->width();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Helpers;
 
 use App\Enums\DiskDriver;
 use App\Exceptions\GenericException;
@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-trait HandleUpload
+class Uploader
 {
     /**
      * Load image from request and save it to storage.
@@ -19,17 +19,10 @@ trait HandleUpload
      * @param  int  $width
      * @param  int  $height
      */
-    public function saveImage(UploadedFile $file, DiskDriver $disk = DiskDriver::LOCAL, string $lastFile = null, int $width = 0, int $height = 0): array
+    public static function saveImage(UploadedFile $file, DiskDriver $disk = DiskDriver::LOCAL, string $lastFile = null, int $width = 0, int $height = 0): array
     {
         if (null !== $lastFile) {
-            $url = explode('/', $lastFile);
-            $lastFile = $url[count($url) - 1];
-
-            $exists = Storage::disk($disk->value)->exists($lastFile);
-
-            if ($exists) {
-                Storage::disk($disk->value)->delete($lastFile);
-            }
+            self::deleteFile($lastFile, $disk);
         }
 
         if (0 == $width) {
@@ -44,18 +37,18 @@ trait HandleUpload
 
         $image = Image::make($file)->fit($width, $height)->encode($extension);
 
-        $imageName = 'image_' . md5($image->__toString().rand()) . '.' . $extension;
+        $filename = 'image_' . md5($image->__toString() . rand()) . '.' . $extension;
 
-        $imageSaved = Storage::disk($disk->value)->put($imageName, $image);
+        $imageSaved = Storage::disk($disk->value)->put($filename, $image);
 
         if (!$imageSaved) {
             throw new GenericException(__('An error occurred uploading the image.'));
         }
 
-        $imageUrl = Storage::disk($disk->value)->url($imageName);
+        $imageUrl = Storage::disk($disk->value)->url($filename);
 
         if (!$imageUrl) {
-            throw new GenericException(__('File :filename not found', ['filename' => $imageName]));
+            throw new GenericException(__('File :filename not found', ['filename' => $filename]));
         }
 
         return [
@@ -70,22 +63,22 @@ trait HandleUpload
      * @param  \Illuminate\Http\UploadedFile  $file
      * @param  \App\Enums\DiskDriver  $disk
      */
-    public function saveFile(UploadedFile $file, DiskDriver $disk = DiskDriver::LOCAL): array
+    public static function saveFile(UploadedFile $file, DiskDriver $disk = DiskDriver::LOCAL): array
     {
         $extension = $file->extension();
 
-        $fileName = 'doc_' . md5($file->__toString().rand()) . '.' . $extension;
+        $filename = 'doc_' . md5($file->__toString() . rand()) . '.' . $extension;
 
-        $fileSaved = Storage::disk($disk->value)->put($fileName, $file);
+        $fileSaved = Storage::disk($disk->value)->put($filename, $file);
 
         if (!$fileSaved) {
             throw new GenericException(__('An error occurred uploading the file.'));
         }
 
-        $fileUrl = Storage::disk($disk->value)->url($fileName);
+        $fileUrl = Storage::disk($disk->value)->url($filename);
 
         if (!$fileUrl) {
-            throw new GenericException(__('File :filename not found', ['filename' => $fileName]));
+            throw new GenericException(__('File :filename not found', ['filename' => $filename]));
         }
 
         return [
@@ -97,15 +90,15 @@ trait HandleUpload
     /**
      * Delete image/file from request and save it to storage.
      */
-    public function deleteFile(string $file, DiskDriver $disk = DiskDriver::LOCAL): void
+    public static function deleteFile(string $file, DiskDriver $disk = DiskDriver::LOCAL): void
     {
         $url = explode('/', $file);
-        $file = $url[count($url) - 1];
+        $filename = $url[count($url) - 1];
 
-        $exists = Storage::disk($disk->value)->exists($file);
+        $exists = Storage::disk($disk->value)->exists($filename);
 
         if ($exists) {
-            Storage::disk($disk->value)->delete($file);
+            Storage::disk($disk->value)->delete($filename);
         }
     }
 }

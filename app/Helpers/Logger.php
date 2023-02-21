@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Traits;
+namespace App\Helpers;
 
 use DeviceDetector\ClientHints;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\Client\Browser;
 use DeviceDetector\Parser\OperatingSystem;
-use Illuminate\Support\Arr;
 
-trait HandleLogger
+class Logger
 {
     /**
      * Log a message
@@ -18,7 +17,7 @@ trait HandleLogger
      * @param  string  $description
      * @param  ?mixed  $extraData
      */
-    public function logger(string $logName, string $type, string $description, mixed $extraData = null): void
+    public static function create(string $logName, string $type, string $description, mixed $extraData = null): void
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
