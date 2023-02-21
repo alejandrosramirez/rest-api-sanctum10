@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,9 +24,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $lastname
  * @property string $email
  * @property string $password
- * @property string|null $email_verified_at
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string|null $remember_token
- * @property int $disabled
+ * @property bool $disabled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -37,27 +39,28 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\AdministratorFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator query()
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereAvatar($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereDisabled($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereLastname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator whereUuid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Administrator withoutTrashed()
+ * @method static Builder|Administrator newModelQuery()
+ * @method static Builder|Administrator newQuery()
+ * @method static Builder|Administrator onlyTrashed()
+ * @method static Builder|Administrator permission($permissions)
+ * @method static Builder|Administrator query()
+ * @method static Builder|Administrator role($roles, $guard = null)
+ * @method static Builder|Administrator searchCriteria(string $search)
+ * @method static Builder|Administrator whereAvatar($value)
+ * @method static Builder|Administrator whereCreatedAt($value)
+ * @method static Builder|Administrator whereDeletedAt($value)
+ * @method static Builder|Administrator whereDisabled($value)
+ * @method static Builder|Administrator whereEmail($value)
+ * @method static Builder|Administrator whereEmailVerifiedAt($value)
+ * @method static Builder|Administrator whereId($value)
+ * @method static Builder|Administrator whereLastname($value)
+ * @method static Builder|Administrator whereName($value)
+ * @method static Builder|Administrator wherePassword($value)
+ * @method static Builder|Administrator whereRememberToken($value)
+ * @method static Builder|Administrator whereUpdatedAt($value)
+ * @method static Builder|Administrator whereUuid($value)
+ * @method static Builder|Administrator withTrashed()
+ * @method static Builder|Administrator withoutTrashed()
  * @mixin \Eloquent
  */
 class Administrator extends Authenticatable
@@ -80,4 +83,86 @@ class Administrator extends Authenticatable
      * @var string
      */
     protected $table = 'administrators';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'uuid',
+        'avatar',
+        'name',
+        'lastname',
+        'email',
+        'password',
+        'disabled'
+    ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $guarded = [];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'disabled' => 'boolean',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array<int, string>
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * Scope a query with search.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $search
+     */
+    public function scopeSearchCriteria(Builder $query, string $search): Builder
+    {
+        return $query->where('name', 'like', "%{$search}%")
+            ->orWhere('lastname', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%")
+            ->orWhereHas('roles', function (Builder $query) use ($search) {
+                $query->where('description', 'like', "%{$search}%");
+            });
+    }
+
+    /**
+     * Avatar mutator/accessor.
+     */
+    public function avatar(): Attribute
+    {
+        return Attribute::make(
+            fn () => $this->attributes['avatar'] ?? 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=200&f=y'
+        )->shouldCache();
+    }
 }
