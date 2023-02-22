@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\ApiAdministrator\Administrator;
+namespace App\Http\Controllers\Api\User;
 
 use App\Enums\DiskDriver;
-use App\Enums\WebAdministratorRoles;
+use App\Enums\WebRoles;
 use App\Helpers\Uploader;
 use App\Http\Controllers\Controller;
-use App\Models\Administrator;
+use App\Models\User;
 use App\Rules\IsValidEmail;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 
-class AdministratorController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,9 +30,9 @@ class AdministratorController extends Controller
         /** @var string $search */
         $search = $request->input('search') ?? '';
 
-        $administrators = Administrator::searchCriteria($search)->paginate($size);
+        $users = User::searchCriteria($search)->paginate($size);
 
-        return response()->json($administrators);
+        return response()->json($users);
     }
 
     /**
@@ -42,44 +42,63 @@ class AdministratorController extends Controller
     {
         $validated = $this->validateRequest($request);
 
-        $administrator = new Administrator();
-
         if ($request->hasFile('avatar')) {
             $uploaded = Uploader::saveImage($request->file('avatar'), DiskDriver::UPLOADS);
-            $administrator->avatar = $uploaded['url'];
+            $validated->avatar = $uploaded['url'];
+        } else {
+            $validated->avatar = null;
         }
 
-        $administrator->name = $validated->name;
-        $administrator->lastname = $validated->lastname;
-        $administrator->email = $validated->email;
-        $administrator->password = $validated->password;
-        $administrator->save();
+        $user = new User([
+            'avatar' => $validated->avatar,
+            'name' => $validated->name,
+            'lastname' => $validated->lastname,
+            'phone' => $validated->phone,
+            'email' => $validated->email,
+            'password' => $validated->password,
+        ]);
 
-        $administrator->assignRole($validated->role);
+        $user->assignRole($validated->role);
 
-        return response()->json(['administrator' => $administrator]);
+        return response()->json(['user' => $user]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Administrator $administrator): Response|ResponseFactory|JsonResponse
+    public function show(User $user): Response|ResponseFactory|JsonResponse
     {
-        return response()->json(['administrator' => $administrator]);
+        return response()->json(['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Administrator $administrator): Response|ResponseFactory|JsonResponse
+    public function update(Request $request, User $user): Response|ResponseFactory|JsonResponse
     {
-        return response()->json();
+        $validated = $this->validateRequest($request, $user->uuid);
+
+        if ($request->hasFile('avatar')) {
+            $uploaded = Uploader::saveImage($request->file('avatar'), DiskDriver::UPLOADS);
+            $user->avatar = $uploaded['url'];
+        }
+
+        $user->name = $validated->name;
+        $user->lastname = $validated->lastname;
+        $user->phone = $validated->phone;
+        $user->email = $validated->email;
+        $user->password = $validated->password;
+        $user->save();
+
+        $user->syncRoles($validated->role);
+
+        return response()->json(['user' => $user]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Administrator $administrator): Response|ResponseFactory|JsonResponse
+    public function destroy(User $user): Response|ResponseFactory|JsonResponse
     {
         return response()->json();
     }
@@ -95,19 +114,21 @@ class AdministratorController extends Controller
         $validated = (object)[];
 
         $requiredPassword = $uuid === 'NULL' ? 'required' : 'sometimes';
-        $uniqueEmail = "unique:administrators,email,{$uuid},id,disabled,deleted_at,NULL";
+        $uniqueEmail = "unique:users,email,{$uuid},id,disabled,deleted_at,NULL";
 
         $request->validate([
             'avatar' => ['sometimes', 'image', 'mimes:png,jpg', 'max:8096'],
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:10'],
             'email' => ['required', 'string','email', new IsValidEmail(), $uniqueEmail],
             'password' => [$requiredPassword, Password::min(10)->letters()->numbers()],
-            'role' => ['required', new Enum(WebAdministratorRoles::class)],
+            'role' => ['required', new Enum(WebRoles::class)],
         ]);
 
         $validated->name = $request->input('name');
         $validated->lastname = $request->input('lastname');
+        $validated->phone = $request->input('phone');
         $validated->email = $request->input('email');
         $validated->password = Hash::make($request->input('password')) ?? null;
         $validated->role = $request->input('role');
