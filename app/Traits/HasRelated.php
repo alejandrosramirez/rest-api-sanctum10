@@ -17,7 +17,7 @@ trait HasRelated
 
             foreach ($relateds as $related) {
                 if ($model->{$related}()->count() > 0) {
-                    throw new GenericException(__('Cannot delete record because it has already associated.'));
+                    throw new GenericException(__('Cannot delete record because it has already in use.'));
                 }
             }
         });

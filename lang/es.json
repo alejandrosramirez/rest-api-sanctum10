@@ -1,0 +1,37 @@
+{
+    "The :attribute must contain at least one letter.": "El campo :attribute debe contener al menos una letra.",
+	"The :attribute must contain at least one number.": "El campo :attribute debe contener al menos un número.",
+	"The :attribute must contain at least one symbol.": "El campo :attribute debe contener al menos un símbolo.",
+	"The :attribute must contain at least one uppercase and one lowercase letter.": "El campo :attribute debe contener al menos una letra mayúscula y una minúscula.",
+	"The given :attribute has appeared in a data leak. Please choose a different :attribute.": "El campo :attribute ha aparecido en una fuga de datos. Por facor elija un/a :attribute diferente.",
+
+    "Unauthenticated.": "No autenticado.",
+    "You don’t have permissions to access this resource.": "No tienes permisos para acceder al recurso.",
+    ":model doesn’t found.": ":modelo no existe.",
+    "URL doesn’t exist.": "La URL no existe.",
+    "The specified method isn’t valid on this request.": "El método especificado no es válido en la petición.",
+    "The specified accept header isn’t valid on this request.": "El encabezado de aceptación especificado no es válido en la petición.",
+    "A error ocurred processing this data.": "Ha ocurrido un error al procesar los datos.",
+    "Request body is too large.": "El cuerpo de la petición es demasiado grande.",
+    "The specified media type isn’t valid on this request.": "El tipo de medio especificado no es válido en la petición.",
+    "Too many attempts, please, try again later.": "Demasiados intentos, por favor, inténtelo de nuevo más tarde.",
+    "A internal server error ocurred.": "Ha ocurrido un error interno del servidor.",
+
+    "File :filename doesn’t exist.": "Archivo :filename de archivo no existe.",
+    "A error occurred uploading the image.": "Ha ocurrido un error al subir la imagen.",
+    "A error occurred uploading the file.": "Ha ocurrido un error al subir el archivo.",
+
+    "Account of :name isn’t verified.": "La cuenta de :name no está verificada.",
+    "Cannot delete record because it has already in use.": "No se puede eliminar el registro porque ya está asociado.",
+
+    "Administrator": "Administrador",
+    "Permission": "Permiso",
+    "Role": "Rol",
+    "User": "Usuario",
+
+    "Administrator :name created successfully.": "Administrador :name creado con éxito.",
+    "Administrator :name updated successfully.": "Administrador :name actualizado con éxito.",
+    "Administrator deleted successfully.": "Administrador eliminado con éxito.",
+    "Administrator disabled successfully.": "Administrador desactivado con éxito.",
+    "Administrator enabled successfully.": "Administrador activado con éxito."
+}

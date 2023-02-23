@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97d180095797de64e9c9582febaa56f8",
+    "content-hash": "7af85cbfff5c0fb60948e0c2512fe9ec",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -286,6 +286,49 @@
                 }
             ],
             "time": "2022-04-01T19:23:25+00:00"
+        },
+        {
+            "name": "devaslanphp/auto-translate",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/devaslanphp/auto-translate.git",
+                "reference": "57f0dd3e38036f88c5b25d115d726d32b46c90b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/devaslanphp/auto-translate/zipball/57f0dd3e38036f88c5b25d115d726d32b46c90b8",
+                "reference": "57f0dd3e38036f88c5b25d115d726d32b46c90b8",
+                "shasum": ""
+            },
+            "require": {
+                "kkomelin/laravel-translatable-string-exporter": "^1.17",
+                "stichoza/google-translate-php": "^4.1"
+            },
+            "require-dev": {
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Devaslanphp\\AutoTranslate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DevaslanPHP"
+                }
+            ],
+            "description": "Auto generate translation JSON files",
+            "support": {
+                "issues": "https://github.com/devaslanphp/auto-translate/issues",
+                "source": "https://github.com/devaslanphp/auto-translate/tree/1.0.0"
+            },
+            "time": "2023-01-13T13:38:26+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1753,6 +1796,71 @@
             "time": "2022-05-21T17:30:32+00:00"
         },
         {
+            "name": "kkomelin/laravel-translatable-string-exporter",
+            "version": "1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kkomelin/laravel-translatable-string-exporter.git",
+                "reference": "a1fa8db6110cc13fcf4887bb3c5f54c3f80c23a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kkomelin/laravel-translatable-string-exporter/zipball/a1fa8db6110cc13fcf4887bb3c5f54c3f80c23a0",
+                "reference": "a1fa8db6110cc13fcf4887bb3c5f54c3f80c23a0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/support": "^8|^9|^10.0",
+                "illuminate/translation": "^8|^9|^10.0",
+                "php": "^8.0",
+                "symfony/finder": "^5|^6"
+            },
+            "require-dev": {
+                "nunomaduro/larastan": "^1.0|^2.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KKomelin\\TranslatableStringExporter\\Providers\\ExporterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KKomelin\\TranslatableStringExporter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Komelin",
+                    "email": "konstantin.komelin@gmail.com"
+                }
+            ],
+            "description": "Translatable String Exporter for Laravel",
+            "keywords": [
+                "export",
+                "exporter",
+                "json",
+                "laravel",
+                "localization",
+                "translation",
+                "translations"
+            ],
+            "support": {
+                "issues": "https://github.com/kkomelin/laravel-translatable-string-exporter/issues",
+                "source": "https://github.com/kkomelin/laravel-translatable-string-exporter/tree/1.19.0"
+            },
+            "time": "2023-02-14T21:12:13+00:00"
+        },
+        {
             "name": "laminas/laminas-diactoros",
             "version": "2.24.0",
             "source": {
@@ -1936,16 +2044,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.1.1",
+            "version": "v10.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "e06f97ec0ed16aefd689506c0a2b55858ba3832e"
+                "reference": "da95415a83fe6216dc78efebfc311365cf4cade0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/e06f97ec0ed16aefd689506c0a2b55858ba3832e",
-                "reference": "e06f97ec0ed16aefd689506c0a2b55858ba3832e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/da95415a83fe6216dc78efebfc311365cf4cade0",
+                "reference": "da95415a83fe6216dc78efebfc311365cf4cade0",
                 "shasum": ""
             },
             "require": {
@@ -2132,7 +2240,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-02-21T18:20:26+00:00"
+            "time": "2023-02-23T12:25:38+00:00"
         },
         {
             "name": "laravel/octane",
@@ -3577,16 +3685,16 @@
         },
         {
             "name": "matomo/device-detector",
-            "version": "6.0.6",
+            "version": "6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matomo-org/device-detector.git",
-                "reference": "ce5ef5e6776c16af306d38e20674973f072e05ed"
+                "reference": "bcbf10f2e0e158b338c6c5db9e89862313405215"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/ce5ef5e6776c16af306d38e20674973f072e05ed",
-                "reference": "ce5ef5e6776c16af306d38e20674973f072e05ed",
+                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/bcbf10f2e0e158b338c6c5db9e89862313405215",
+                "reference": "bcbf10f2e0e158b338c6c5db9e89862313405215",
                 "shasum": ""
             },
             "require": {
@@ -3642,7 +3750,7 @@
                 "source": "https://github.com/matomo-org/matomo",
                 "wiki": "https://dev.matomo.org/"
             },
-            "time": "2023-01-16T08:18:02+00:00"
+            "time": "2023-02-22T10:17:31+00:00"
         },
         {
             "name": "moneyphp/money",
@@ -5148,6 +5256,74 @@
             "time": "2023-01-29T21:24:40+00:00"
         },
         {
+            "name": "pyaesoneaung/to-raw-sql",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PyaeSoneAungRgn/to-raw-sql.git",
+                "reference": "835a683fb48ee1055c8ee2ad9d50b0a3763cf19f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PyaeSoneAungRgn/to-raw-sql/zipball/835a683fb48ee1055c8ee2ad9d50b0a3763cf19f",
+                "reference": "835a683fb48ee1055c8ee2ad9d50b0a3763cf19f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0|^10.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.14.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PyaeSoneAung\\ToRawSql\\ToRawSqlServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PyaeSoneAung\\ToRawSql\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pyae Sone Aung",
+                    "email": "pyaesoneaungrgn@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Get raw SQL from Laravel Query Builder",
+            "homepage": "https://github.com/PyaeSoneAungRgn/to-raw-sql",
+            "keywords": [
+                "laravel",
+                "pyaesoneaung",
+                "to-raw-sql"
+            ],
+            "support": {
+                "issues": "https://github.com/PyaeSoneAungRgn/to-raw-sql/issues",
+                "source": "https://github.com/PyaeSoneAungRgn/to-raw-sql/tree/v1.1.1"
+            },
+            "time": "2023-02-22T17:33:24+00:00"
+        },
+        {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -5704,6 +5880,154 @@
                 "source": "https://github.com/stella-maris-solutions/clock/tree/0.1.7"
             },
             "time": "2022-11-25T16:15:06+00:00"
+        },
+        {
+            "name": "stichoza/google-translate-php",
+            "version": "v4.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Stichoza/google-translate-php.git",
+                "reference": "14f6a9c84cd860910706ee3a668fba8a0a1aac0f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Stichoza/google-translate-php/zipball/14f6a9c84cd860910706ee3a668fba8a0a1aac0f",
+                "reference": "14f6a9c84cd860910706ee3a668fba8a0a1aac0f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "~6.0|~7.0",
+                "php": "^7.1|^8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stichoza\\GoogleTranslate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Levan Velijanashvili",
+                    "email": "me@stichoza.com"
+                }
+            ],
+            "description": "Free Google Translate API PHP Package",
+            "homepage": "https://github.com/Stichoza/google-translate-php",
+            "keywords": [
+                "google",
+                "php",
+                "translate",
+                "translating",
+                "translator"
+            ],
+            "support": {
+                "issues": "https://github.com/Stichoza/google-translate-php/issues",
+                "source": "https://github.com/Stichoza/google-translate-php/tree/v4.1.7"
+            },
+            "funding": [
+                {
+                    "url": "https://btc.com/bc1qc25j4x7yahghm8nnn6lypnw59nptylsw32nkfl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.paypal.me/stichoza",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://ko-fi.com/stichoza",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://liberapay.com/stichoza",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://opencollective.com/stichoza",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://www.patreon.com/stichoza",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2022-11-25T11:17:52+00:00"
+        },
+        {
+            "name": "strictus/strictus",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-strictus/strictus.git",
+                "reference": "7092aede2a90cd88d04e28a7ce89519387e75b8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-strictus/strictus/zipball/7092aede2a90cd88d04e28a7ce89519387e75b8b",
+                "reference": "7092aede2a90cd88d04e28a7ce89519387e75b8b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.4.1",
+                "pestphp/pest": "^1.22.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Strictus\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Miller",
+                    "email": "chris@jump24.co.uk",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Wendell Adriel",
+                    "email": "me@wendelladriel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Strict Typing on inline variables for PHP",
+            "keywords": [
+                "php",
+                "strict",
+                "strict types",
+                "strict typing",
+                "type",
+                "typing"
+            ],
+            "support": {
+                "issues": "https://github.com/php-strictus/strictus/issues",
+                "source": "https://github.com/php-strictus/strictus/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/wendelladriel",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/WendellAdriel",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-05T20:18:08+00:00"
         },
         {
             "name": "stripe/stripe-php",

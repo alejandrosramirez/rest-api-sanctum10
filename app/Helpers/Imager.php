@@ -25,7 +25,7 @@ class Imager
         $storageDisk = Storage::disk($disk->value);
 
         if (!$storageDisk->exists($filename)) {
-            throw new GenericException(__('File :filename not found.', ['filename' => $filename]));
+            throw new GenericException(__('File :filename doesn’t exist.', ['filename' => $filename]));
         }
 
         $imageIns = Image::make($storageDisk->get($filename));

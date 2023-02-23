@@ -21,7 +21,7 @@ class Uploader
      */
     public static function saveImage(UploadedFile $file, DiskDriver $disk = DiskDriver::LOCAL, string $lastFile = null, int $width = 0, int $height = 0): array
     {
-        if (null !== $lastFile) {
+        if (null != $lastFile) {
             self::deleteFile($lastFile, $disk);
         }
 
@@ -42,13 +42,13 @@ class Uploader
         $imageSaved = Storage::disk($disk->value)->put($filename, $image);
 
         if (!$imageSaved) {
-            throw new GenericException(__('An error occurred uploading the image.'));
+            throw new GenericException(__('A error occurred uploading the image.'));
         }
 
         $imageUrl = Storage::disk($disk->value)->url($filename);
 
         if (!$imageUrl) {
-            throw new GenericException(__('File :filename not found', ['filename' => $filename]));
+            throw new GenericException(__('File :filename doesn’t exist.', ['filename' => $filename]));
         }
 
         return [
@@ -72,13 +72,13 @@ class Uploader
         $fileSaved = Storage::disk($disk->value)->put($filename, $file);
 
         if (!$fileSaved) {
-            throw new GenericException(__('An error occurred uploading the file.'));
+            throw new GenericException(__('A error occurred uploading the file.'));
         }
 
         $fileUrl = Storage::disk($disk->value)->url($filename);
 
         if (!$fileUrl) {
-            throw new GenericException(__('File :filename not found', ['filename' => $filename]));
+            throw new GenericException(__('File :filename doesn’t exist.', ['filename' => $filename]));
         }
 
         return [

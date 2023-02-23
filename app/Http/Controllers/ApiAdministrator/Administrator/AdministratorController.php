@@ -7,6 +7,7 @@ use App\Enums\WebAdministratorRoles;
 use App\Helpers\Uploader;
 use App\Http\Controllers\Controller;
 use App\Models\Administrator;
+use App\Responses\SuccessResponse;
 use App\Rules\IsValidEmail;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
@@ -38,7 +39,7 @@ class AdministratorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): Response|ResponseFactory|JsonResponse
+    public function store(Request $request): Response|ResponseFactory|JsonResponse|SuccessResponse
     {
         $validated = $this->validateRequest($request);
 
@@ -57,7 +58,7 @@ class AdministratorController extends Controller
 
         $administrator->assignRole($validated->role);
 
-        return response()->json(['administrator' => $administrator]);
+        return new SuccessResponse(__('Administrator :name created successfully', ['name' => "{$administrator->name} {$administrator->lastname}"]));
     }
 
     /**

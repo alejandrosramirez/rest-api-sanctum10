@@ -21,7 +21,10 @@ class EnsureAccountIsVerified
             !$request->user() ||
             ($request->user() instanceof MustVerifyEmail && !$request->user()->hasVerifiedEmail())
         ) {
-            throw new GenericException(__('Your account is not verified.'));
+            /** @var \App\Models\User $user */
+            $user = $request->user();
+
+            throw new GenericException(__('Account of :name isn’t verified.', ['name' => "{$user->name} {$user->lastname}"]));
         }
 
         return $next($request);

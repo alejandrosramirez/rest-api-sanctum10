@@ -105,7 +105,7 @@ class Handler extends ExceptionHandler
         ) {
             return $this->errorResponse(
                 'unauthorized_error',
-                __('You don\'t have the right permissions to access the resource.'),
+                __('You don’t have permissions to access this resource.'),
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -113,7 +113,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             return $this->errorResponse(
                 'model_error',
-                __(':model not found.', ['model' => __(class_basename($e->getModel()))]),
+                __(':model doesn’t found.', ['model' => __(class_basename($e->getModel()))]),
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -121,7 +121,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof NotFoundHttpException || $e instanceof RouteNotFoundException) {
             return $this->errorResponse(
                 'not_found_http_error',
-                __('Url doesn\'t exist.'),
+                __('URL doesn’t exist.'),
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -129,7 +129,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof MethodNotAllowedHttpException) {
             return $this->errorResponse(
                 'method_not_allowed_error',
-                __('Specified method on request not valid.'),
+                __('The specified method isn’t valid on this request.'),
                 Response::HTTP_METHOD_NOT_ALLOWED
             );
         }
@@ -137,7 +137,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof NotAcceptableHttpException) {
             return $this->errorResponse(
                 'not_acceptable_http_error',
-                __('Specified accept header on request not valid.'),
+                __('The specified accept header isn’t valid on this request.'),
                 Response::HTTP_NOT_ACCEPTABLE
             );
         }
@@ -145,7 +145,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof QueryException) {
             return $this->errorResponse(
                 'query_error',
-                __('A error ocurred, cannot process query.'),
+                __('A error ocurred processing this data.'),
                 Response::HTTP_CONFLICT
             );
         }
@@ -161,7 +161,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof UnsupportedMediaTypeHttpException) {
             return $this->errorResponse(
                 'unsupported_media_type_http_error',
-                __('Specified media type on request not valid.'),
+                __('The specified media type isn’t valid on this request.'),
                 Response::HTTP_UNSUPPORTED_MEDIA_TYPE
             );
         }
@@ -177,14 +177,14 @@ class Handler extends ExceptionHandler
         if ($e instanceof ThrottleRequestsException) {
             return $this->errorResponse(
                 'throttle_requests_error',
-                __('Too many attempts. Please try again later.'),
+                __('Too many attempts, please, try again later.'),
                 Response::HTTP_TOO_MANY_REQUESTS
             );
         }
 
         return $this->errorResponse(
             'internal_server_error',
-            __('A server error has ocurred.'),
+            __('A internal server error has ocurred.'),
             Response::HTTP_INTERNAL_SERVER_ERROR
         );
     }
