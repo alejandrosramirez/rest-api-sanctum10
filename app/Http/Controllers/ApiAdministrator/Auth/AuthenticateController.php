@@ -50,10 +50,6 @@ class AuthenticateController extends Controller
     {
         Auth::guard('web_administrator')->logout();
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
         /** @var \App\Models\Administrator $administrator */
         $administrator = Auth::guard('web_administrator')->user();
 

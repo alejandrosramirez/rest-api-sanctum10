@@ -151,9 +151,7 @@ class Administrator extends Authenticatable
         return $query->where('name', 'like', "%{$search}%")
             ->orWhere('lastname', 'like', "%{$search}%")
             ->orWhere('email', 'like', "%{$search}%")
-            ->orWhereHas('roles', function (Builder $query) use ($search) {
-                $query->where('description', 'like', "%{$search}%");
-            });
+            ->orWhereHas('roles', fn (Builder $query) => $query->where('description', 'like', "%{$search}%"));
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiAdministrator\AdministratorController;
 use App\Http\Controllers\ApiAdministrator\Auth\AuthenticateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,7 @@ Route::middleware('auth:api_administrator')->group(function () {
             Route::post('/logout', 'logout');
         });
     });
+
+    Route::get('/administrators/{administrator}/disable', [AdministratorController::class, 'disable']);
+    Route::apiResource('administrators', AdministratorController::class);
 });

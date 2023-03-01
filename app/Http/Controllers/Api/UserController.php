@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\User;
+namespace App\Http\Controllers\Api;
 
 use App\Enums\DiskDriver;
 use App\Enums\WebRoles;
 use App\Helpers\Uploader;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Responses\SuccessResponse;
 use App\Rules\IsValidEmail;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
@@ -37,44 +38,49 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function store(Request $request): Response|ResponseFactory|JsonResponse
+    public function store(Request $request): SuccessResponse
     {
         $validated = $this->validateRequest($request);
 
+        $user = new User();
+
         if ($request->hasFile('avatar')) {
             $uploaded = Uploader::saveImage($request->file('avatar'), DiskDriver::UPLOADS);
-            $validated->avatar = $uploaded['url'];
-        } else {
-            $validated->avatar = null;
+            $user->avatar = $uploaded['url'];
         }
 
-        $user = new User([
-            'avatar' => $validated->avatar,
-            'name' => $validated->name,
-            'lastname' => $validated->lastname,
-            'phone' => $validated->phone,
-            'email' => $validated->email,
-            'password' => $validated->password,
-        ]);
+        $user->name = $validated->name;
+        $user->lastname = $validated->lastname;
+        $user->phone = $validated->phone;
+        $user->email = $validated->email;
+        $user->password = $validated->password;
+        $user->save();
 
         $user->assignRole($validated->role);
 
-        return response()->json(['user' => $user]);
+        return new SuccessResponse(__('User created successfully.'));
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
      */
-    public function show(User $user): Response|ResponseFactory|JsonResponse
+    public function show(User $user): SuccessResponse
     {
-        return response()->json(['user' => $user]);
+        return new SuccessResponse($user);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
      */
-    public function update(Request $request, User $user): Response|ResponseFactory|JsonResponse
+    public function update(Request $request, User $user): SuccessResponse
     {
         $validated = $this->validateRequest($request, $user->uuid);
 
@@ -92,15 +98,34 @@ class UserController extends Controller
 
         $user->syncRoles($validated->role);
 
-        return response()->json(['user' => $user]);
+        return new SuccessResponse(__('User updated successfully.'));
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
      */
-    public function destroy(User $user): Response|ResponseFactory|JsonResponse
+    public function destroy(User $user): SuccessResponse
     {
-        return response()->json();
+        $user->delete();
+
+        return new SuccessResponse(__('User deleted successfully.'));
+    }
+
+    /**
+     * Enable/Disable the specified resource from storage
+     *
+     * @param  \App\Models\User  $user
+     */
+    public function disable(User $user): SuccessResponse
+    {
+        $user->disabled = !$user->disabled;
+        $user->save();
+
+        $message = $user->disabled ? 'disabled' : 'enabled';
+
+        return new SuccessResponse(__("User {$message} successfully."));
     }
 
     /**
@@ -122,7 +147,7 @@ class UserController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:10'],
             'email' => ['required', 'string','email', new IsValidEmail(), $uniqueEmail],
-            'password' => [$requiredPassword, Password::min(10)->letters()->numbers()],
+            'password' => [$requiredPassword, 'string', Password::min(10)->letters()->numbers()],
             'role' => ['required', new Enum(WebRoles::class)],
         ]);
 

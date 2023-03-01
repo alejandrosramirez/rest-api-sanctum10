@@ -14,7 +14,7 @@ class IsValidEmail implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (preg_match('/^[\w.-]+@\w+(\.[a-z]{2,})+$/i', $value)) {
+        if (!preg_match('/^[\w.-]+@\w+(\.[a-z]{2,})+$/i', $value)) {
             $fail('validation.custom.is_valid_email')->translate([
                 'attribute' => trans('validation.attributes.email'),
             ]);

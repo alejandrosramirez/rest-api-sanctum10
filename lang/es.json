@@ -1,10 +1,4 @@
 {
-    "The :attribute must contain at least one letter.": "El campo :attribute debe contener al menos una letra.",
-	"The :attribute must contain at least one number.": "El campo :attribute debe contener al menos un número.",
-	"The :attribute must contain at least one symbol.": "El campo :attribute debe contener al menos un símbolo.",
-	"The :attribute must contain at least one uppercase and one lowercase letter.": "El campo :attribute debe contener al menos una letra mayúscula y una minúscula.",
-	"The given :attribute has appeared in a data leak. Please choose a different :attribute.": "El campo :attribute ha aparecido en una fuga de datos. Por facor elija un/a :attribute diferente.",
-
     "Unauthenticated.": "No autenticado.",
     "You don’t have permissions to access this resource.": "No tienes permisos para acceder al recurso.",
     ":model doesn’t found.": ":modelo no existe.",
@@ -29,9 +23,15 @@
     "Role": "Rol",
     "User": "Usuario",
 
-    "Administrator :name created successfully.": "Administrador :name creado con éxito.",
-    "Administrator :name updated successfully.": "Administrador :name actualizado con éxito.",
+    "Administrator created successfully.": "Administrador creado con éxito.",
+    "Administrator updated successfully.": "Administrador actualizado con éxito.",
     "Administrator deleted successfully.": "Administrador eliminado con éxito.",
     "Administrator disabled successfully.": "Administrador desactivado con éxito.",
-    "Administrator enabled successfully.": "Administrador activado con éxito."
+    "Administrator enabled successfully.": "Administrador activado con éxito.",
+
+    "User created successfully.": "Usuario creado con éxito.",
+    "User updated successfully.": "Usuario actualizado con éxito.",
+    "User deleted successfully.": "Usuario eliminado con éxito.",
+    "User disabled successfully.": "Usuario desactivado con éxito.",
+    "User enabled successfully.": "Usuario activado con éxito."
 }

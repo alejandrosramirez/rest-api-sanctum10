@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthenticateController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,7 @@ Route::middleware('auth:api')->group(function () {
             Route::post('/logout', 'logout');
         });
     });
+
+    Route::patch('/users/{user}/disable', [UserController::class, 'disable']);
+    Route::apiResource('users', UserController::class);
 });

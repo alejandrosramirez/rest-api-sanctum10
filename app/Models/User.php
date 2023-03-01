@@ -169,9 +169,7 @@ class User extends Authenticatable
             ->orWhere('lastname', 'like', "%{$search}%")
             ->orWhere('phone', 'like', "%{$search}%")
             ->orWhere('email', 'like', "%{$search}%")
-            ->orWhereHas('roles', function (Builder $query) use ($search) {
-                $query->where('description', 'like', "%{$search}%");
-            });
+            ->orWhereHas('roles', fn (Builder $query) => $query->where('description', 'like', "%{$search}%"));
     }
 
     /**

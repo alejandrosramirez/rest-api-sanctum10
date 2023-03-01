@@ -151,6 +151,12 @@ return [
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
 
+    'password.mixed' => 'The :attribute must contain at least one uppercase and one lowercase letter.',
+    'password.letters' => 'The :attribute must contain at least one letter.',
+    'password.symbols' => 'The :attribute must contain at least one symbol.',
+    'password.numbers' => 'The :attribute must contain at least one number.',
+    'password.uncompromised' => 'The given :attribute has appeared in a data leak. Please choose a different :attribute.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -190,7 +196,6 @@ return [
         'role' => 'role',
         'rfc' => 'rfc',
         'color' => 'color',
-        'state_id' => 'state',
         'username' => 'username',
     ],
 

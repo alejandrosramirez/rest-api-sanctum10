@@ -28,14 +28,12 @@ class AuthenticateController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
-
-        /** @var \App\Models\Administrator $administrator */
-        $administrator = Auth::guard('web_administrator')->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::guard('web')->user();
 
         return response()->json([
-            'token' => $administrator->createToken('authAdministrator')->plainTextToken,
-            'administrator' => $administrator,
+            'token' => $user->createToken('auth')->plainTextToken,
+            'user' => $user,
         ]);
     }
 
@@ -48,15 +46,11 @@ class AuthenticateController extends Controller
      */
     public function logout(Request $request): Response|JsonResponse
     {
-        Auth::guard('web_administrator')->logout();
+        Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
+        /** @var \App\Models\Administrator $user */
+        $user = Auth::guard('web')->user();
 
-        $request->session()->regenerateToken();
-
-        /** @var \App\Models\Administrator $administrator */
-        $administrator = Auth::guard('web_administrator')->user();
-
-        return response()->json(['logout' => $administrator == null]);
+        return response()->json(['logout' => $user == null]);
     }
 }

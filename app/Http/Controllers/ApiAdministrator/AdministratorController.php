@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ApiAdministrator\Administrator;
+namespace App\Http\Controllers\ApiAdministrator;
 
 use App\Enums\DiskDriver;
 use App\Enums\WebAdministratorRoles;
@@ -38,8 +38,10 @@ class AdministratorController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function store(Request $request): Response|ResponseFactory|JsonResponse|SuccessResponse
+    public function store(Request $request): SuccessResponse
     {
         $validated = $this->validateRequest($request);
 
@@ -58,31 +60,69 @@ class AdministratorController extends Controller
 
         $administrator->assignRole($validated->role);
 
-        return new SuccessResponse(__('Administrator :name created successfully', ['name' => "{$administrator->name} {$administrator->lastname}"]));
+        return new SuccessResponse(__('Administrator created successfully.'));
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param  \App\Models\Administrator  $administrator
      */
-    public function show(Administrator $administrator): Response|ResponseFactory|JsonResponse
+    public function show(Administrator $administrator): SuccessResponse
     {
-        return response()->json(['administrator' => $administrator]);
+        return new SuccessResponse($administrator);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function update(Request $request, Administrator $administrator): Response|ResponseFactory|JsonResponse
+    public function update(Request $request, Administrator $administrator): SuccessResponse
     {
-        return response()->json();
+        $validated = $this->validateRequest($request, $administrator->uuid);
+
+        if ($request->hasFile('avatar')) {
+            $uploaded = Uploader::saveImage($request->file('avatar'), DiskDriver::UPLOADS, $administrator->avatar);
+            $administrator->avatar = $uploaded['url'];
+        }
+
+        $administrator->name = $validated->name;
+        $administrator->lastname = $validated->lastname;
+        $administrator->email = $validated->email;
+        if ($validated->password) {
+            $administrator->password = $validated->password;
+        }
+        $administrator->save();
+
+        $administrator->syncRoles($validated->role);
+
+        return new SuccessResponse(__('Administrator updated successfully.'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Administrator $administrator): Response|ResponseFactory|JsonResponse
+    public function destroy(Administrator $administrator): SuccessResponse
     {
-        return response()->json();
+        $administrator->delete();
+
+        return new SuccessResponse(__('Administrator deleted successfully.'));
+    }
+
+    /**
+     * Enable/Disable the specified resource from storage
+     *
+     * @param  \App\Models\Administrator  $administrator
+     */
+    public function disable(Administrator $administrator): SuccessResponse
+    {
+        $administrator->disabled = !$administrator->disabled;
+        $administrator->save();
+
+        $message = $administrator->disabled ? 'disabled' : 'enabled';
+
+        return new SuccessResponse(__("Administrator {$message} successfully."));
     }
 
     /**
