@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.1.5.
+ * Generated for Laravel 10.3.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2949,6 +2949,7 @@
      * @method static array|null resolveAuthenticatedUser(\Illuminate\Http\Request $request)
      * @method static void resolveAuthenticatedUserUsing(\Closure $callback)
      * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(\Illuminate\Contracts\Broadcasting\HasBroadcastChannel|string $channel, callable|string $callback, array $options = [])
+     * @method static \Illuminate\Support\Collection getChannels()
      * @see \Illuminate\Broadcasting\BroadcastManager
      * @see \Illuminate\Broadcasting\Broadcasters\Broadcaster
      */ 
@@ -8351,6 +8352,8 @@
      * @method static \Psr\Log\LoggerInterface getLogger()
      * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
      * @method static void setEventDispatcher(\Illuminate\Contracts\Events\Dispatcher $dispatcher)
+     * @method static \Illuminate\Log\Logger|mixed when(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
+     * @method static \Illuminate\Log\Logger|mixed unless(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
      * @see \Illuminate\Log\LogManager
      */ 
         class Log {
@@ -20037,14 +20040,15 @@ namespace  {
              * @param array|string $columns
              * @param string $pageName
              * @param int|null $page
+             * @param \Closure|int|null $total
              * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator 
              * @throws \InvalidArgumentException
              * @static 
              */ 
-            public static function paginate($perPage = null, $columns = [], $pageName = 'page', $page = null)
+            public static function paginate($perPage = null, $columns = [], $pageName = 'page', $page = null, $total = null)
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->paginate($perPage, $columns, $pageName, $page);
+                                return $instance->paginate($perPage, $columns, $pageName, $page, $total);
             }
              
                 /**
